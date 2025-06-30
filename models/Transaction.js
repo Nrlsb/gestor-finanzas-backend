@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const TransactionSchema = new mongoose.Schema({
-    // Asociamos la transacción con un usuario. Esta es la clave para la privacidad.
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Referencia al modelo User que ya creamos
+        ref: 'User',
+        required: true
+    },
+    // NUEVO CAMPO:
+    ledger: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ledger',
         required: true
     },
     type: {
@@ -25,12 +30,10 @@ const TransactionSchema = new mongoose.Schema({
         type: String,
         required: [true, 'La categoría es obligatoria']
     },
-    // Guardamos la fecha para poder ordenarlas
     date: {
         type: Date,
         default: Date.now
     },
-    // Añadimos los campos que ya tenías para egresos
     originalAmount: Number,
     divisionFactor: {
         type: Number,
